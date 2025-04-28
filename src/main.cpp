@@ -30,13 +30,6 @@ const int initialBallDy = 1; // Initial y-direction speed
 // Paddle movement step per cycle
 const int paddleStep = 1; // Pixels to move paddle per button press
 
-// Data for "LOSE" message display (compressed bitmap data)
-const uint32_t los[][4] = {
-    {0x81889,
-     0x395a94bd,
-     0x5a083000,
-     66}};
-
 // Function prototypes
 void resetBall();                                                     // Reset ball to starting position
 void displayLose();                                                   // Display "You Lose!" message

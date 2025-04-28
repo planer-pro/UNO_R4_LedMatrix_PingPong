@@ -1590,7 +1590,7 @@ LOAD c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/
 LOAD c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libnosys.a
 END GROUP
 
-.text           0x00004000     0xaae4
+.text           0x00004000     0xaac4
                 0x00000000                __tz_FLASH_S = ABSOLUTE (FLASH_START)
                 0x00004000                __ROM_Start = .
  *(.sketch_boot)
@@ -2657,220 +2657,221 @@ END GROUP
  *(.dtors)
  *(.rodata*)
  .rodata._Z10updateBallv.str1.1
-                0x0000d740       0x2b .pio\build\uno_r4_wifi\src\main.cpp.o
+                0x0000d740       0x17 .pio\build\uno_r4_wifi\src\main.cpp.o
  .rodata._Z11displayLosev.str1.1
-                0x0000d76b        0xa .pio\build\uno_r4_wifi\src\main.cpp.o
+                0x0000d757        0xa .pio\build\uno_r4_wifi\src\main.cpp.o
  .rodata.setup.str1.1
-                0x0000d775       0x1b .pio\build\uno_r4_wifi\src\main.cpp.o
+                0x0000d761        0xe .pio\build\uno_r4_wifi\src\main.cpp.o
  .rodata._ZL4font
-                0x0000d790      0x500 .pio\build\uno_r4_wifi\lib069\libAdafruit GFX Library.a(Adafruit_GFX.cpp.o)
+                0x0000d76f      0x500 .pio\build\uno_r4_wifi\lib069\libAdafruit GFX Library.a(Adafruit_GFX.cpp.o)
+ *fill*         0x0000dc6f        0x1 ff
  .rodata._ZTV10GFXcanvas8
-                0x0000dc90       0x58 .pio\build\uno_r4_wifi\lib069\libAdafruit GFX Library.a(Adafruit_GFX.cpp.o)
-                0x0000dc90                vtable for GFXcanvas8
+                0x0000dc70       0x58 .pio\build\uno_r4_wifi\lib069\libAdafruit GFX Library.a(Adafruit_GFX.cpp.o)
+                0x0000dc70                vtable for GFXcanvas8
  .rodata._ZTV12Adafruit_GFX
-                0x0000dce8       0x58 .pio\build\uno_r4_wifi\lib069\libAdafruit GFX Library.a(Adafruit_GFX.cpp.o)
-                0x0000dce8                vtable for Adafruit_GFX
+                0x0000dcc8       0x58 .pio\build\uno_r4_wifi\lib069\libAdafruit GFX Library.a(Adafruit_GFX.cpp.o)
+                0x0000dcc8                vtable for Adafruit_GFX
  .rodata._ZN15UNOR4WMatrixGFX15matrix_irq_pinsE
-                0x0000dd40       0x6e .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
-                0x0000dd40                UNOR4WMatrixGFX::matrix_irq_pins
+                0x0000dd20       0x6e .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
+                0x0000dd20                UNOR4WMatrixGFX::matrix_irq_pins
  .rodata._ZN15UNOR4WMatrixGFX4pinsE
-                0x0000ddae       0xc0 .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
-                0x0000ddae                UNOR4WMatrixGFX::pins
+                0x0000dd8e       0xc0 .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
+                0x0000dd8e                UNOR4WMatrixGFX::pins
  .rodata._ZN15UNOR4WMatrixGFX5beginEmPN7arduino6StreamE.str1.1
-                0x0000de6e       0x28 .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
- *fill*         0x0000de96        0x2 ff
+                0x0000de4e       0x28 .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
+ *fill*         0x0000de76        0x2 ff
  .rodata._ZTV15UNOR4WMatrixGFX
-                0x0000de98       0x58 .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
-                0x0000de98                vtable for UNOR4WMatrixGFX
+                0x0000de78       0x58 .pio\build\uno_r4_wifi\libb5d\libUNOR4WMatrixGFX.a(UNOR4WMatrixGFX.cpp.o)
+                0x0000de78                vtable for UNOR4WMatrixGFX
  .rodata._ZL4P000
-                0x0000def0        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000ded0        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P001
-                0x0000def4        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000ded4        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P002
-                0x0000def8        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000ded8        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P003
-                0x0000defc        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dedc        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P004
-                0x0000defe        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dede        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P011
-                0x0000df02        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dee2        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P012
-                0x0000df06        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dee6        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P013
-                0x0000df08        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dee8        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P015
-                0x0000df0a        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000deea        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P100
-                0x0000df0e        0xe .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000deee        0xe .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P101
-                0x0000df1c        0xe .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000defc        0xe .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P102
-                0x0000df2a        0xc .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df0a        0xc .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P103
-                0x0000df36        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df16        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P104
-                0x0000df3e        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df1e        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P105
-                0x0000df44        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df24        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P106
-                0x0000df48        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df28        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P107
-                0x0000df4a        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df2a        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P109
-                0x0000df4c        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df2c        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P110
-                0x0000df56        0xc .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df36        0xc .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P111
-                0x0000df62        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df42        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P112
-                0x0000df6c        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df4c        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P204
-                0x0000df72        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df52        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P205
-                0x0000df7c        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df5c        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P206
-                0x0000df86        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df66        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P212
-                0x0000df8c        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df6c        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P213
-                0x0000df92        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df72        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P301
-                0x0000df98        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df78        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P302
-                0x0000dfa0        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df80        0x6 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P303
-                0x0000dfa6        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df86        0x2 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P304
-                0x0000dfa8        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df88        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P401
-                0x0000dfac        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df8c        0xa .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P410
-                0x0000dfb6        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df96        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P411
-                0x0000dfbe        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000df9e        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P500
-                0x0000dfc6        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dfa6        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P501
-                0x0000dfca        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dfaa        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL4P502
-                0x0000dfd2        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dfb2        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL6P014_b
-                0x0000dfda        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dfba        0x4 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL6P400_b
-                0x0000dfde        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dfbe        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
  .rodata._ZL6P408_b
-                0x0000dfe6        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
- *fill*         0x0000dfee        0x2 ff
+                0x0000dfc6        0x8 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+ *fill*         0x0000dfce        0x2 ff
  .rodata.g_pin_cfg
-                0x0000dff0      0x138 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
-                0x0000dff0                g_pin_cfg
+                0x0000dfd0      0x138 .pio\build\uno_r4_wifi\libFrameworkArduinoVariant.a(variant.cpp.o)
+                0x0000dfd0                g_pin_cfg
  .rodata._ZTV4UART
-                0x0000e128       0x34 .pio\build\uno_r4_wifi\libFrameworkArduino.a(Serial.cpp.o)
-                0x0000e128                vtable for UART
+                0x0000e108       0x34 .pio\build\uno_r4_wifi\libFrameworkArduino.a(Serial.cpp.o)
+                0x0000e108                vtable for UART
  .rodata.CSWTCH.44
-                0x0000e15c        0x6 .pio\build\uno_r4_wifi\libFrameworkArduino.a(analog.cpp.o)
+                0x0000e13c        0x6 .pio\build\uno_r4_wifi\libFrameworkArduino.a(analog.cpp.o)
  .rodata.CSWTCH.72
-                0x0000e162        0x5 .pio\build\uno_r4_wifi\libFrameworkArduino.a(analog.cpp.o)
+                0x0000e142        0x5 .pio\build\uno_r4_wifi\libFrameworkArduino.a(analog.cpp.o)
  .rodata._ZN7arduino5Print7printlnEv.str1.1
-                0x0000e167        0x3 .pio\build\uno_r4_wifi\libFrameworkArduino.a(Print.cpp.o)
- .rodata        0x0000e16a        0xd .pio\build\uno_r4_wifi\libFrameworkArduino.a(main.cpp.o)
+                0x0000e147        0x3 .pio\build\uno_r4_wifi\libFrameworkArduino.a(Print.cpp.o)
+ .rodata        0x0000e14a        0xd .pio\build\uno_r4_wifi\libFrameworkArduino.a(main.cpp.o)
  .rodata._Z12arduino_mainv.str1.1
-                0x0000e177       0x10 .pio\build\uno_r4_wifi\libFrameworkArduino.a(main.cpp.o)
+                0x0000e157       0x10 .pio\build\uno_r4_wifi\libFrameworkArduino.a(main.cpp.o)
  .rodata.g_interrupt_event_link_select
-                0x0000e187       0x20 .pio\build\uno_r4_wifi\libFrameworkArduino.a(vector_table.c.o)
-                0x0000e187                g_interrupt_event_link_select
+                0x0000e167       0x20 .pio\build\uno_r4_wifi\libFrameworkArduino.a(vector_table.c.o)
+                0x0000e167                g_interrupt_event_link_select
  .rodata.__FUNCTION__.6535
-                0x0000e1a7       0x13 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e187       0x13 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
  .rodata.cm_backtrace_assert.str1.1
-                0x0000e1ba       0x26 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e19a       0x26 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
                                  0x28 (size before relaxing)
  .rodata.cm_backtrace_fault.str1.1
-                0x0000e1e0      0x6ae .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e1c0      0x6ae .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
  .rodata.cm_backtrace_firmware_info.str1.1
-                0x0000e88e       0x23 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e86e       0x23 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
  .rodata.cm_backtrace_init.str1.1
-                0x0000e8b1       0x62 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e891       0x62 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
  .rodata.dump_stack.str1.1
-                0x0000e913       0x65 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e8f3       0x65 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
                                  0x8d (size before relaxing)
  .rodata.print_call_stack.str1.1
-                0x0000e978       0x65 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+                0x0000e958       0x65 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
  .rodata.str1.1
-                0x0000e9dd       0x20 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
- *fill*         0x0000e9fd        0x3 ff
+                0x0000e9bd       0x20 .pio\build\uno_r4_wifi\libFrameworkArduino.a(cm_backtrace.c.o)
+ *fill*         0x0000e9dd        0x3 ff
  .rodata.g_async_baud
-                0x0000ea00        0xd C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_sci_uart.o)
- *fill*         0x0000ea0d        0x3 ff
+                0x0000e9e0        0xd C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_sci_uart.o)
+ *fill*         0x0000e9ed        0x3 ff
  .rodata.g_div_coefficient
-                0x0000ea10       0x1a C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_sci_uart.o)
- *fill*         0x0000ea2a        0x2 ff
+                0x0000e9f0       0x1a C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_sci_uart.o)
+ *fill*         0x0000ea0a        0x2 ff
  .rodata.g_vbatt_pins_input
-                0x0000ea2c        0x6 C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_ioport.o)
- *fill*         0x0000ea32        0x2 ff
+                0x0000ea0c        0x6 C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_ioport.o)
+ *fill*         0x0000ea12        0x2 ff
  .rodata.adc_elc_trigger_lut
-                0x0000ea34        0xc C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_adc.o)
+                0x0000ea14        0xc C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(r_adc.o)
  .rodata.g_prcr_masks
-                0x0000ea40        0x8 C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(bsp_register_protection.o)
+                0x0000ea20        0x8 C:\Users\user\.platformio\packages\framework-arduinorenesas-uno\variants\UNOWIFIR4\libs\libfsp.a(bsp_register_protection.o)
  .rodata._global_impure_ptr
-                0x0000ea48        0x4 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
-                0x0000ea48                _global_impure_ptr
+                0x0000ea28        0x4 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-impure.o)
+                0x0000ea28                _global_impure_ptr
  .rodata.__sf_fake_stderr
-                0x0000ea4c       0x20 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
-                0x0000ea4c                __sf_fake_stderr
+                0x0000ea2c       0x20 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x0000ea2c                __sf_fake_stderr
  .rodata.__sf_fake_stdin
-                0x0000ea6c       0x20 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
-                0x0000ea6c                __sf_fake_stdin
+                0x0000ea4c       0x20 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x0000ea4c                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x0000ea8c       0x20 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
-                0x0000ea8c                __sf_fake_stdout
+                0x0000ea6c       0x20 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-findfp.o)
+                0x0000ea6c                __sf_fake_stdout
  .rodata._svfprintf_r.str1.1
-                0x0000eaac       0x11 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0000ea8c       0x11 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-svfprintf.o)
  .rodata._vfprintf_r.str1.1
-                0x0000eabd       0x11 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-vfprintf.o)
+                0x0000ea9d       0x11 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-vfprintf.o)
  .rodata._printf_i.str1.1
-                0x0000eabd       0x22 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0000ea9d       0x22 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-nano-vfprintf_i.o)
  *(.eh_frame*)
- *fill*         0x0000eadf        0x1 ff
- .eh_frame      0x0000eae0        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
- .eh_frame      0x0000eae0        0x4 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtend.o
-                0x0000eae4                __ROM_End = .
+ *fill*         0x0000eabf        0x1 ff
+ .eh_frame      0x0000eac0        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
+ .eh_frame      0x0000eac0        0x4 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtend.o
+                0x0000eac4                __ROM_End = .
                 0x000000c0                __Vectors_Size = (__Vectors_End - __Vectors)
 
-.glue_7         0x0000eae4        0x0
- .glue_7        0x0000eae4        0x0 linker stubs
+.glue_7         0x0000eac4        0x0
+ .glue_7        0x0000eac4        0x0 linker stubs
 
-.glue_7t        0x0000eae4        0x0
- .glue_7t       0x0000eae4        0x0 linker stubs
+.glue_7t        0x0000eac4        0x0
+ .glue_7t       0x0000eac4        0x0 linker stubs
 
-.vfp11_veneer   0x0000eae4        0x0
- .vfp11_veneer  0x0000eae4        0x0 linker stubs
+.vfp11_veneer   0x0000eac4        0x0
+ .vfp11_veneer  0x0000eac4        0x0 linker stubs
 
-.v4_bx          0x0000eae4        0x0
- .v4_bx         0x0000eae4        0x0 linker stubs
+.v4_bx          0x0000eac4        0x0
+ .v4_bx         0x0000eac4        0x0 linker stubs
 
-.iplt           0x0000eae4        0x0
- .iplt          0x0000eae4        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
+.iplt           0x0000eac4        0x0
+ .iplt          0x0000eac4        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0000eae4                __exidx_start = .
+                0x0000eac4                __exidx_start = .
 
-.ARM.exidx      0x0000eae4        0x8
+.ARM.exidx      0x0000eac4        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x0000eae4        0x8 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libgcc.a(_udivmoddi4.o)
-                0x0000eaec                __exidx_end = .
-                0x0000eaec                __etext = .
+ .ARM.exidx     0x0000eac4        0x8 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libgcc.a(_udivmoddi4.o)
+                0x0000eacc                __exidx_end = .
+                0x0000eacc                __etext = .
                 0x20000000                __tz_RAM_S = ORIGIN (RAM)
 
-.rel.dyn        0x0000eaec        0x0
- .rel.iplt      0x0000eaec        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
+.rel.dyn        0x0000eacc        0x0
+ .rel.iplt      0x0000eacc        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
 
 .fsp_dtc_vector_table
                 0x20000000        0x0
                 0x20000000                . = ORIGIN (RAM)
  *(.fsp_dtc_vector_table)
 
-.data           0x20000000       0xa0 load address 0x0000eaec
+.data           0x20000000       0xa0 load address 0x0000eacc
                 0x20000000                __data_start__ = .
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                __Code_In_RAM_Start = .
@@ -2922,10 +2923,10 @@ END GROUP
                 0x200000a0                . = ALIGN (0x4)
                 0x200000a0                __data_end__ = .
 
-.igot.plt       0x200000a0        0x0 load address 0x0000eb8c
+.igot.plt       0x200000a0        0x0 load address 0x0000eb6c
  .igot.plt      0x200000a0        0x0 c:/users/user/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard/crtbegin.o
 
-.noinit         0x200000a0       0x18 load address 0x0000eb8c
+.noinit         0x200000a0       0x18 load address 0x0000eb6c
                 0x200000a0                . = ALIGN (0x4)
                 0x200000a0                __noinit_start = .
  *(.noinit*)
@@ -2934,7 +2935,7 @@ END GROUP
  *(.heap.*)
                 0x200000b8                __noinit_end = .
 
-.bss            0x200000b8      0xa4c load address 0x0000eb8c
+.bss            0x200000b8      0xa4c load address 0x0000eb6c
                 0x200000b8                . = ALIGN (0x4)
                 0x200000b8                __bss_start__ = .
  *(.bss*)
@@ -3081,7 +3082,7 @@ END GROUP
                 0x20000b04                . = ALIGN (0x4)
                 0x20000b04                __bss_end__ = .
 
-.heap           0x20000b08     0x2000 load address 0x0000eb8c
+.heap           0x20000b08     0x2000 load address 0x0000eb6c
                 0x20000b08                . = ALIGN (0x8)
                 0x20000b08                __HeapBase = .
                 0x20000b08                end = .
