@@ -1,8 +1,5 @@
 #include <Arduino.h>
 #include <UNOR4WMatrixGFX.h>
-#include <Fonts/FreeSansBold18pt7b.h> // Large font for potential use
-#include <Fonts/Org_01.h>             // 8px height font
-#include <Fonts/Picopixel.h>          // 7px height font
 
 // Initialize the LED matrix display
 UNOR4WMatrixGFX matrix;
