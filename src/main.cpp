@@ -183,16 +183,16 @@ void displayLose()
     canvas.setCursor(0, 0);            // Set cursor to top-left (baseline for fonts)
     canvas.setTextSize(1);             // 1:1 pixel scale
     canvas.setTextColor(MATRIX_WHITE); // White text
-    canvas.print("You Lose!");         // Write message to canvas
+    canvas.print("Lose");              // Write message to canvas
 
     // Get the x-position after text (width of text)
     uint8_t canvas_max_x = canvas.getCursorX();
 
-    int x_offset = 0;
+    int x_offset = -11; // Start at right edge of canvas
     int y_offset = 0;
 
     // Scroll text horizontally across the matrix
-    for (x_offset = 0; x_offset < (canvas_max_x - MATRIX_WIDTH); x_offset++)
+    for (x_offset = -11; x_offset < canvas_max_x; x_offset++)
     {
         matrix.clearDisplay(); // Clear matrix for new frame
 
