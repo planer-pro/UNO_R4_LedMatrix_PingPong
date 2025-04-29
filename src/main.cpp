@@ -38,14 +38,13 @@ enum GameState
 };
 GameState gameState = RUNNING;
 
-// Speed & control
-typedef unsigned long ul;
-const int delayTime = 200;
+// Timing control
+const int delayTime = 200; // Delay between game updates (ms)
 const int initialBallDx = 1;
 const int initialBallDy = 1;
 const int paddleStep = 1;
 
-// Prototypes
+// Function prototypes
 void resetBall();
 void displayMessage(const String &message);
 void updateBall();
@@ -58,20 +57,15 @@ void startRound();
 void setup()
 {
     Serial.begin(115200);
-
+    randomSeed(analogRead(0));
+    matrix.begin();
     pinMode(3, INPUT_PULLUP);
     pinMode(2, INPUT_PULLUP);
 
-    randomSeed(analogRead(0));
-
-    matrix.begin();
-
     // Initial game start message
     Serial.println("Game started!");
-
-    resetBall();
-    startRound();
     displayMessage("Welcome to Pong!");
+    startRound();
 }
 
 void loop()
@@ -81,7 +75,6 @@ void loop()
         handlePaddle();
         updateBall();
         drawGame();
-
         delay(delayTime);
     }
     else
@@ -89,38 +82,29 @@ void loop()
         // End state: show message
         if (gameState == GAME_OVER)
         {
-            Serial.println("Game Over");
-
             while (true)
             {
                 displayMessage("Game Over!");
-
-                if (!digitalRead(3) && !digitalRead(2)) // long press of hold button to restart
+                if (!digitalRead(3) && !digitalRead(2))
                     break;
             }
         }
         else if (gameState == WIN)
         {
-            Serial.println("You Win");
-
             while (true)
             {
                 displayMessage("You Win!");
-
-                if (!digitalRead(3) && !digitalRead(2)) // long press of hold button to restart
+                if (!digitalRead(3) && !digitalRead(2))
                     break;
             }
         }
-
         // Restart
         roundNumber = 1;
         missedBalls = 0;
         score = 0;
         obstaclesHit = 0;
         gameState = RUNNING;
-
         startRound();
-        resetBall();
     }
 }
 
@@ -128,16 +112,12 @@ void handlePaddle()
 {
     if (!digitalRead(3) && paddleX > 0)
         paddleX -= paddleStep;
-
     if (!digitalRead(2) && paddleX < 12 - paddleWidth)
         paddleX += paddleStep;
 }
 
 void updateBall()
 {
-    if (gameState != RUNNING)
-        return;
-
     ballX += dx;
     ballY += dy;
 
@@ -148,18 +128,11 @@ void updateBall()
         {
             obstacleActive[i] = false;
             dy = -dy; // bounce
-            obstaclesHit++;
-
-            Serial.print("Obstacles hit: ");
-            Serial.println(obstaclesHit);
-
             break;
         }
     }
-
     // Check if all cleared => next round
     bool allCleared = true;
-
     for (int i = 0; i < roundNumber; i++)
     {
         if (obstacleActive[i])
@@ -168,24 +141,18 @@ void updateBall()
             break;
         }
     }
-
     if (allCleared)
     {
         roundNumber++;
         missedBalls = 0;
-
         if (roundNumber <= MAX_ROUNDS)
         {
-            Serial.print("Round: ");
-            Serial.println(roundNumber);
             startRound();
-            resetBall();
         }
         else
         {
             gameState = WIN;
         }
-
         return;
     }
 
@@ -195,13 +162,11 @@ void updateBall()
         ballX = 0;
         dx = -dx;
     }
-
     if (ballX > 11)
     {
         ballX = 11;
         dx = -dx;
     }
-
     if (ballY < 0)
     {
         ballY = 0;
@@ -212,10 +177,6 @@ void updateBall()
     if (ballY == 6 && ballX >= paddleX && ballX < paddleX + paddleWidth)
     {
         dy = -dy;
-        score++;
-
-        Serial.print("Paddle hits: ");
-        Serial.println(score);
     }
 
     // Missed paddle
@@ -228,6 +189,8 @@ void updateBall()
         }
         else
         {
+            // Display Loose message with count
+            displayMessage("Loose " + String(missedBalls) + "/" + String(MAX_MISSES));
             resetBall();
             initObstacles();
         }
@@ -237,18 +200,14 @@ void updateBall()
 void drawGame()
 {
     matrix.clearDisplay();
-
     for (int i = 0; i < roundNumber; i++)
     {
         if (obstacleActive[i])
             matrix.drawPixel(obstacleX[i], obstacleY[i], 1);
     }
-
     matrix.drawPixel(ballX, ballY, 1);
-
     for (int i = 0; i < paddleWidth; i++)
         matrix.drawPixel(paddleX + i, 7, 1);
-
     matrix.display();
 }
 
@@ -258,34 +217,6 @@ void resetBall()
     ballY = random(0, 4);
     dx = initialBallDx * (random(0, 2) * 2 - 1);
     dy = initialBallDy;
-}
-
-void displayMessage(const String &message)
-{
-    canvas.fillScreen(0);
-    canvas.setCursor(0, 0);
-    canvas.setTextSize(1);
-    canvas.setTextColor(MATRIX_WHITE);
-    canvas.print(message);
-
-    uint8_t maxX = canvas.getCursorX();
-
-    for (int x_offset = -11; x_offset < maxX; x_offset++)
-    {
-        matrix.clearDisplay();
-        writeOffsetRect(canvas, x_offset, 0);
-        matrix.display();
-
-        delay(25);
-    }
-}
-
-void writeOffsetRect(GFXcanvas8 &c, int x_offset, int y_offset)
-{
-    for (int y = 0; y < 8; y++)
-        for (int x = 0; x < 12; x++)
-            if (c.getPixel(x + x_offset, y + y_offset))
-                matrix.drawPixel(x, y, 1);
 }
 
 void initObstacles()
@@ -300,10 +231,32 @@ void initObstacles()
 
 void startRound()
 {
-    // Print and display round
-    Serial.print("Round: ");
-    Serial.println(roundNumber);
-
     displayMessage("Round " + String(roundNumber) + "/" + String(MAX_ROUNDS));
     initObstacles();
+    resetBall();
+}
+
+void displayMessage(const String &message)
+{
+    canvas.fillScreen(0);
+    canvas.setCursor(0, 0);
+    canvas.setTextSize(1);
+    canvas.setTextColor(MATRIX_WHITE);
+    canvas.print(message);
+    uint8_t maxX = canvas.getCursorX();
+    for (int x_offset = -11; x_offset < maxX; x_offset++)
+    {
+        matrix.clearDisplay();
+        writeOffsetRect(canvas, x_offset, 0);
+        matrix.display();
+        delay(25);
+    }
+}
+
+void writeOffsetRect(GFXcanvas8 &c, int x_offset, int y_offset)
+{
+    for (int y = 0; y < 8; y++)
+        for (int x = 0; x < 12; x++)
+            if (c.getPixel(x + x_offset, y + y_offset))
+                matrix.drawPixel(x, y, 1);
 }
