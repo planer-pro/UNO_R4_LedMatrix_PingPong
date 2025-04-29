@@ -1,223 +1,309 @@
 #include <Arduino.h>
 #include <UNOR4WMatrixGFX.h>
 
+// Constants
+#define MAX_ROUNDS 10 // rounds until win
+#define MAX_MISSES 10 // misses until game over
+
 // Initialize the LED matrix display
 UNOR4WMatrixGFX matrix;
-// Create a canvas for rendering text (96x7 pixels, 1-bit)
-GFXcanvas8 canvas(96, 7); // Used for any messages
+// Canvas for rendering text
+GFXcanvas8 canvas(96, 7);
 
-// Variables for the ball's position and movement
-int ballX, ballY; // Ball coordinates (x, y)
-int dx, dy;       // Ball direction/speed (x and y increments)
+// Ball state
+int ballX, ballY;
+int dx, dy;
 
-// Variables for the paddle
-int paddleX = 4;           // Initial paddle position (centered)
-const int paddleWidth = 3; // Paddle width in pixels
+// Obstacles
+int roundNumber = 1;
+int obstacleX[MAX_ROUNDS];
+int obstacleY[MAX_ROUNDS];
+bool obstacleActive[MAX_ROUNDS];
+int obstaclesHit = 0; // count of obstacles hit
 
-// Pin assignments for buttons (swapped for left/right control)
-const int leftButtonPin = 3;  // Pin for left movement button
-const int rightButtonPin = 2; // Pin for right movement button
+// Paddle
+int paddleX = 4;
+const int paddleWidth = 3;
+int score = 0; // hits by paddle
 
-// Game counters
-int missedBalls = 0; // Tracks missed balls
-int score = 0;       // Tracks successful paddle hits
+// Missed balls
+int missedBalls = 0;
 
-// Game speed control
-const int delayTime = 200; // Delay between game updates (ms)
+// Game state
+enum GameState
+{
+    RUNNING,
+    GAME_OVER,
+    WIN
+};
+GameState gameState = RUNNING;
 
-// Initial ball speed
-const int initialBallDx = 1; // Initial x-direction speed
-const int initialBallDy = 1; // Initial y-direction speed
+// Speed & control
+typedef unsigned long ul;
+const int delayTime = 200;
+const int initialBallDx = 1;
+const int initialBallDy = 1;
+const int paddleStep = 1;
 
-// Paddle movement step per cycle
-const int paddleStep = 1; // Pixels to move paddle per button press
-
-// Function prototypes
-void resetBall();                                                     // Reset ball to starting position
-void displayMessage(String message);                                  // Display any message
-void updateBall();                                                    // Update ball position and collisions
-void drawGame();                                                      // Draw ball and paddle on matrix
-void handlePaddle();                                                  // Handle paddle movement via buttons
-void writeOffsetRect(GFXcanvas8 &canvas, int x_offset, int y_offset); // Draw canvas portion on matrix
+// Prototypes
+void resetBall();
+void displayMessage(const String &message);
+void updateBall();
+void drawGame();
+void handlePaddle();
+void writeOffsetRect(GFXcanvas8 &c, int x_offset, int y_offset);
+void initObstacles();
+void startRound();
 
 void setup()
 {
-    // Initialize Serial communication for debugging
     Serial.begin(115200);
-    Serial.println("Game started!");
 
-    // Seed random number generator using analog noise
+    pinMode(3, INPUT_PULLUP);
+    pinMode(2, INPUT_PULLUP);
+
     randomSeed(analogRead(0));
 
-    // Set initial ball position and direction
-    resetBall();
-
-    // Initialize the LED matrix
     matrix.begin();
 
-    // Configure button pins with internal pull-up resistors
-    pinMode(leftButtonPin, INPUT_PULLUP);
-    pinMode(rightButtonPin, INPUT_PULLUP);
+    // Initial game start message
+    Serial.println("Game started!");
 
-    displayMessage("Welcome to Pong!"); // Show "Welcome to Pong!" message
-    displayMessage("Round 1");          // Show "Round 1" message
+    resetBall();
+    startRound();
+    displayMessage("Welcome to Pong!");
 }
 
 void loop()
 {
-    // Handle paddle movement based on button input
-    handlePaddle();
+    if (gameState == RUNNING)
+    {
+        handlePaddle();
+        updateBall();
+        drawGame();
 
-    // Update ball position and check for collisions
-    updateBall();
+        delay(delayTime);
+    }
+    else
+    {
+        // End state: show message
+        if (gameState == GAME_OVER)
+        {
+            Serial.println("Game Over");
 
-    // Render the game state on the matrix
-    drawGame();
+            while (true)
+            {
+                displayMessage("Game Over!");
 
-    // Control game speed with a delay
-    delay(delayTime);
+                if (!digitalRead(3) && !digitalRead(2)) // long press of hold button to restart
+                    break;
+            }
+        }
+        else if (gameState == WIN)
+        {
+            Serial.println("You Win");
+
+            while (true)
+            {
+                displayMessage("You Win!");
+
+                if (!digitalRead(3) && !digitalRead(2)) // long press of hold button to restart
+                    break;
+            }
+        }
+
+        // Restart
+        roundNumber = 1;
+        missedBalls = 0;
+        score = 0;
+        obstaclesHit = 0;
+        gameState = RUNNING;
+
+        startRound();
+        resetBall();
+    }
 }
 
-// Handle paddle movement based on button presses
 void handlePaddle()
 {
-    // Move paddle left if button pressed and not at left edge
-    if (!digitalRead(leftButtonPin) && paddleX > 0)
-    {
+    if (!digitalRead(3) && paddleX > 0)
         paddleX -= paddleStep;
-    }
-    // Move paddle right if button pressed and not at right edge
-    if (!digitalRead(rightButtonPin) && paddleX < 12 - paddleWidth)
-    {
+
+    if (!digitalRead(2) && paddleX < 12 - paddleWidth)
         paddleX += paddleStep;
-    }
 }
 
-// Update ball position and handle collisions
 void updateBall()
 {
-    // Update ball position
+    if (gameState != RUNNING)
+        return;
+
     ballX += dx;
     ballY += dy;
 
-    // Collision with left wall
+    // Obstacle collision
+    for (int i = 0; i < roundNumber; i++)
+    {
+        if (obstacleActive[i] && ballX == obstacleX[i] && ballY == obstacleY[i])
+        {
+            obstacleActive[i] = false;
+            dy = -dy; // bounce
+            obstaclesHit++;
+
+            Serial.print("Obstacles hit: ");
+            Serial.println(obstaclesHit);
+
+            break;
+        }
+    }
+
+    // Check if all cleared => next round
+    bool allCleared = true;
+
+    for (int i = 0; i < roundNumber; i++)
+    {
+        if (obstacleActive[i])
+        {
+            allCleared = false;
+            break;
+        }
+    }
+
+    if (allCleared)
+    {
+        roundNumber++;
+        missedBalls = 0;
+
+        if (roundNumber <= MAX_ROUNDS)
+        {
+            Serial.print("Round: ");
+            Serial.println(roundNumber);
+            startRound();
+            resetBall();
+        }
+        else
+        {
+            gameState = WIN;
+        }
+
+        return;
+    }
+
+    // Wall collisions
     if (ballX < 0)
     {
-        ballX = 0; // Keep ball within bounds
-        dx = -dx;  // Reverse x-direction
+        ballX = 0;
+        dx = -dx;
     }
-    // Collision with right wall
+
     if (ballX > 11)
     {
-        ballX = 11; // Keep ball within bounds
-        dx = -dx;   // Reverse x-direction
+        ballX = 11;
+        dx = -dx;
     }
 
-    // Collision with top wall
     if (ballY < 0)
     {
-        ballY = 0; // Keep ball within bounds
-        dy = -dy;  // Reverse y-direction
+        ballY = 0;
+        dy = -dy;
     }
 
-    // Check for paddle collision at row 6 (just above paddle)
+    // Paddle collision
     if (ballY == 6 && ballX >= paddleX && ballX < paddleX + paddleWidth)
     {
-        dy = -dy; // Reverse y-direction (bounce up)
-        score++;  // Increment score for successful hit
-        Serial.print("Score: ");
+        dy = -dy;
+        score++;
+
+        Serial.print("Paddle hits: ");
         Serial.println(score);
     }
 
-    // Check if ball passes paddle (missed)
+    // Missed paddle
     if (ballY > 7)
     {
-        missedBalls++; // Increment missed balls counter
-        Serial.print("Missed balls: ");
-        Serial.println(missedBalls);
-        displayMessage("Lose"); // Show "You Lose!" message
-        resetBall();            // Reset ball for new round
+        missedBalls++;
+        if (missedBalls >= MAX_MISSES)
+        {
+            gameState = GAME_OVER;
+        }
+        else
+        {
+            resetBall();
+            initObstacles();
+        }
     }
 }
 
-// Draw the game state (ball and paddle) on the matrix
 void drawGame()
 {
-    // Clear the matrix display
     matrix.clearDisplay();
 
-    // Draw the ball at its current position
-    matrix.drawPixel(ballX, ballY, 1);
-
-    // Draw the paddle at row 7
-    for (int i = 0; i < paddleWidth; i++)
+    for (int i = 0; i < roundNumber; i++)
     {
-        matrix.drawPixel(paddleX + i, 7, 1);
+        if (obstacleActive[i])
+            matrix.drawPixel(obstacleX[i], obstacleY[i], 1);
     }
 
-    // Update the matrix to show the new frame
+    matrix.drawPixel(ballX, ballY, 1);
+
+    for (int i = 0; i < paddleWidth; i++)
+        matrix.drawPixel(paddleX + i, 7, 1);
+
     matrix.display();
 }
 
-// Reset the ball to a random starting position
 void resetBall()
 {
-    ballX = random(0, 12);                       // Random x-position (0-11)
-    ballY = random(0, 4);                        // Random y-position in top half (0-3)
-    dx = initialBallDx * (random(0, 2) * 2 - 1); // Random x-direction (-1 or 1)
-    dy = initialBallDy;                          // Always move downward initially
+    ballX = random(0, 12);
+    ballY = random(0, 4);
+    dx = initialBallDx * (random(0, 2) * 2 - 1);
+    dy = initialBallDy;
 }
 
-// Display "You Lose!" message with scrolling effect
-void displayMessage(String message)
+void displayMessage(const String &message)
 {
-    // Clear the canvas (not the display)
     canvas.fillScreen(0);
+    canvas.setCursor(0, 0);
+    canvas.setTextSize(1);
+    canvas.setTextColor(MATRIX_WHITE);
+    canvas.print(message);
 
-    // Set text properties for "You Lose!" message
-    canvas.setCursor(0, 0);            // Set cursor to top-left (baseline for fonts)
-    canvas.setTextSize(1);             // 1:1 pixel scale
-    canvas.setTextColor(MATRIX_WHITE); // White text
-    canvas.print(message);             // Write message to canvas
+    uint8_t maxX = canvas.getCursorX();
 
-    // Get the x-position after text (width of text)
-    uint8_t canvas_max_x = canvas.getCursorX();
-
-    int x_offset = -11; // Start at right edge of canvas
-    int y_offset = 0;
-
-    // Scroll text horizontally across the matrix
-    for (x_offset = -11; x_offset < canvas_max_x; x_offset++)
+    for (int x_offset = -11; x_offset < maxX; x_offset++)
     {
-        matrix.clearDisplay(); // Clear matrix for new frame
-
-        // Draw portion of canvas on matrix
-        writeOffsetRect(canvas, x_offset, y_offset);
-
-        // Update matrix display
+        matrix.clearDisplay();
+        writeOffsetRect(canvas, x_offset, 0);
         matrix.display();
 
-        // Delay for smooth scrolling effect
         delay(25);
     }
 }
 
-// Draw a portion of the canvas on the matrix at an offset
-void writeOffsetRect(GFXcanvas8 &canvas, int x_offset, int y_offset)
+void writeOffsetRect(GFXcanvas8 &c, int x_offset, int y_offset)
 {
-    matrix.clearDisplay(); // Clear matrix for new frame
-    // Loop through matrix pixels (12x8)
     for (int y = 0; y < 8; y++)
-    {
         for (int x = 0; x < 12; x++)
-        {
-            // Get pixel color from canvas at offset position
-            uint8_t color;
-            if ((color = canvas.getPixel(x + x_offset, y + y_offset)))
-            {
-                // Draw pixel on matrix if color is non-zero
-                matrix.drawPixel(x, y, color);
-            }
-        }
+            if (c.getPixel(x + x_offset, y + y_offset))
+                matrix.drawPixel(x, y, 1);
+}
+
+void initObstacles()
+{
+    for (int i = 0; i < roundNumber; i++)
+    {
+        obstacleX[i] = random(0, 12);
+        obstacleY[i] = random(0, 3);
+        obstacleActive[i] = true;
     }
+}
+
+void startRound()
+{
+    // Print and display round
+    Serial.print("Round: ");
+    Serial.println(roundNumber);
+
+    displayMessage("Round " + String(roundNumber) + "/" + String(MAX_ROUNDS));
+    initObstacles();
 }
