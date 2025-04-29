@@ -3,6 +3,8 @@
 
 // Initialize the LED matrix display
 UNOR4WMatrixGFX matrix;
+// Create a canvas for rendering text (96x7 pixels, 1-bit)
+GFXcanvas8 canvas(96, 7); // Used for any messages
 
 // Variables for the ball's position and movement
 int ballX, ballY; // Ball coordinates (x, y)
@@ -32,7 +34,7 @@ const int paddleStep = 1; // Pixels to move paddle per button press
 
 // Function prototypes
 void resetBall();                                                     // Reset ball to starting position
-void displayLose();                                                   // Display "You Lose!" message
+void displayMessage(String message);                                  // Display any message
 void updateBall();                                                    // Update ball position and collisions
 void drawGame();                                                      // Draw ball and paddle on matrix
 void handlePaddle();                                                  // Handle paddle movement via buttons
@@ -56,6 +58,9 @@ void setup()
     // Configure button pins with internal pull-up resistors
     pinMode(leftButtonPin, INPUT_PULLUP);
     pinMode(rightButtonPin, INPUT_PULLUP);
+
+    displayMessage("Welcome to Pong!"); // Show "Welcome to Pong!" message
+    displayMessage("Round 1");          // Show "Round 1" message
 }
 
 void loop()
@@ -76,17 +81,13 @@ void loop()
 // Handle paddle movement based on button presses
 void handlePaddle()
 {
-    // Read button states (LOW when pressed due to pull-up resistors)
-    bool leftPressed = digitalRead(leftButtonPin) == LOW;
-    bool rightPressed = digitalRead(rightButtonPin) == LOW;
-
     // Move paddle left if button pressed and not at left edge
-    if (leftPressed && paddleX > 0)
+    if (!digitalRead(leftButtonPin) && paddleX > 0)
     {
         paddleX -= paddleStep;
     }
     // Move paddle right if button pressed and not at right edge
-    if (rightPressed && paddleX < 12 - paddleWidth)
+    if (!digitalRead(rightButtonPin) && paddleX < 12 - paddleWidth)
     {
         paddleX += paddleStep;
     }
@@ -134,8 +135,8 @@ void updateBall()
         missedBalls++; // Increment missed balls counter
         Serial.print("Missed balls: ");
         Serial.println(missedBalls);
-        displayLose(); // Show "You Lose!" message
-        resetBall();   // Reset ball for new round
+        displayMessage("Lose"); // Show "You Lose!" message
+        resetBall();            // Reset ball for new round
     }
 }
 
@@ -167,23 +168,17 @@ void resetBall()
     dy = initialBallDy;                          // Always move downward initially
 }
 
-// Create a canvas for rendering text (80x16 pixels, 1-bit)
-GFXcanvas8 canvas(80, 16); // Used for "You Lose!" message
-
 // Display "You Lose!" message with scrolling effect
-void displayLose()
+void displayMessage(String message)
 {
     // Clear the canvas (not the display)
     canvas.fillScreen(0);
-
-    // Brief delay before showing message
-    delay(50);
 
     // Set text properties for "You Lose!" message
     canvas.setCursor(0, 0);            // Set cursor to top-left (baseline for fonts)
     canvas.setTextSize(1);             // 1:1 pixel scale
     canvas.setTextColor(MATRIX_WHITE); // White text
-    canvas.print("Lose");              // Write message to canvas
+    canvas.print(message);             // Write message to canvas
 
     // Get the x-position after text (width of text)
     uint8_t canvas_max_x = canvas.getCursorX();
@@ -205,9 +200,6 @@ void displayLose()
         // Delay for smooth scrolling effect
         delay(25);
     }
-
-    // Brief pause after scrolling
-    delay(50);
 }
 
 // Draw a portion of the canvas on the matrix at an offset
