@@ -2,8 +2,13 @@
 #include <UNOR4WMatrixGFX.h>
 
 // Constants
-#define MAX_ROUNDS 10 // rounds until win
-#define MAX_MISSES 10 // misses until game over
+#define MAX_ROUNDS 10         // rounds until win
+#define MAX_MISSES 10         // misses until game over
+#define RESTART_DELAY 1000    // ms full-screen display on restart
+#define PADDLE_ANIM_DELAY 200 // ms delay for paddle animation before round restart
+#define INITIAL_PADDLE_X 4    // starting X position of paddle
+#define PADDLE_WIDTH 4        // paddle width in pixels
+#define OBSTACLE_ROWS 5       // number of top rows for obstacles
 
 // Initialize the LED matrix display
 UNOR4WMatrixGFX matrix;
@@ -22,8 +27,7 @@ bool obstacleActive[MAX_ROUNDS];
 int obstaclesHit = 0; // count of obstacles hit
 
 // Paddle
-int paddleX = 4;
-const int paddleWidth = 3;
+int paddleX = INITIAL_PADDLE_X;
 int score = 0; // hits by paddle
 
 // Missed balls
@@ -39,10 +43,10 @@ enum GameState
 GameState gameState = RUNNING;
 
 // Timing control
-const int delayTime = 200; // Delay between game updates (ms)
-const int initialBallDx = 1;
-const int initialBallDy = 1;
-const int paddleStep = 1;
+const int delayTime = 100;   // Delay between game updates (ms)
+const int initialBallDx = 1; // initial ball dx
+const int initialBallDy = 1; // initial ball dy
+const int paddleStep = 1;    // pixels to move paddle per press
 
 // Function prototypes
 void resetBall();
@@ -53,6 +57,7 @@ void handlePaddle();
 void writeOffsetRect(GFXcanvas8 &c, int x_offset, int y_offset);
 void initObstacles();
 void startRound();
+void animatePaddle();
 
 void setup()
 {
@@ -79,7 +84,7 @@ void loop()
     }
     else
     {
-        // End state: show message
+        // End state: show message until both buttons pressed
         if (gameState == GAME_OVER)
         {
             while (true)
@@ -89,7 +94,7 @@ void loop()
                     break;
             }
         }
-        else if (gameState == WIN)
+        else
         {
             while (true)
             {
@@ -98,7 +103,19 @@ void loop()
                     break;
             }
         }
-        // Restart
+        // Flash full screen before restart
+        matrix.clearDisplay();
+        for (int y = 0; y < 8; y++)
+        {
+            for (int x = 0; x < 12; x++)
+            {
+                matrix.drawPixel(x, y, 1);
+            }
+        }
+        matrix.display();
+        delay(RESTART_DELAY);
+
+        // Restart game state
         roundNumber = 1;
         missedBalls = 0;
         score = 0;
@@ -112,26 +129,35 @@ void handlePaddle()
 {
     if (!digitalRead(3) && paddleX > 0)
         paddleX -= paddleStep;
-    if (!digitalRead(2) && paddleX < 12 - paddleWidth)
+    if (!digitalRead(2) && paddleX < 12 - PADDLE_WIDTH)
         paddleX += paddleStep;
 }
 
 void updateBall()
 {
+    // Pre-move obstacle check for bounce
+    int nextX = ballX + dx;
+    int nextY = ballY + dy;
+    for (int i = 0; i < roundNumber; i++)
+    {
+        if (obstacleActive[i] && nextX == obstacleX[i] && nextY == obstacleY[i])
+        {
+            obstacleActive[i] = false;
+            dy = -dy; // bounce vertically
+            obstaclesHit++;
+            Serial.print("Obstacles hit: ");
+            Serial.println(obstaclesHit);
+            ballX += dx;
+            ballY += dy;
+            return;
+        }
+    }
+
+    // Normal movement
     ballX += dx;
     ballY += dy;
 
-    // Obstacle collision
-    for (int i = 0; i < roundNumber; i++)
-    {
-        if (obstacleActive[i] && ballX == obstacleX[i] && ballY == obstacleY[i])
-        {
-            obstacleActive[i] = false;
-            dy = -dy; // bounce
-            break;
-        }
-    }
-    // Check if all cleared => next round
+    // Check all cleared
     bool allCleared = true;
     for (int i = 0; i < roundNumber; i++)
     {
@@ -174,9 +200,12 @@ void updateBall()
     }
 
     // Paddle collision
-    if (ballY == 6 && ballX >= paddleX && ballX < paddleX + paddleWidth)
+    if (ballY == 6 && ballX >= paddleX && ballX < paddleX + PADDLE_WIDTH)
     {
         dy = -dy;
+        score++;
+        Serial.print("Paddle hits: ");
+        Serial.println(score);
     }
 
     // Missed paddle
@@ -189,10 +218,12 @@ void updateBall()
         }
         else
         {
-            // Display Loose message with count
             displayMessage("Loose " + String(missedBalls) + "/" + String(MAX_MISSES));
             resetBall();
-            initObstacles();
+            // reset and animate paddle
+            paddleX = INITIAL_PADDLE_X;
+            animatePaddle();
+            // obstacles remain as cleared
         }
     }
 }
@@ -206,7 +237,7 @@ void drawGame()
             matrix.drawPixel(obstacleX[i], obstacleY[i], 1);
     }
     matrix.drawPixel(ballX, ballY, 1);
-    for (int i = 0; i < paddleWidth; i++)
+    for (int i = 0; i < PADDLE_WIDTH; i++)
         matrix.drawPixel(paddleX + i, 7, 1);
     matrix.display();
 }
@@ -224,7 +255,7 @@ void initObstacles()
     for (int i = 0; i < roundNumber; i++)
     {
         obstacleX[i] = random(0, 12);
-        obstacleY[i] = random(0, 3);
+        obstacleY[i] = random(0, OBSTACLE_ROWS);
         obstacleActive[i] = true;
     }
 }
@@ -232,8 +263,25 @@ void initObstacles()
 void startRound()
 {
     displayMessage("Round " + String(roundNumber) + "/" + String(MAX_ROUNDS));
+    // reset and animate paddle
+    paddleX = INITIAL_PADDLE_X;
+    animatePaddle();
     initObstacles();
     resetBall();
+}
+
+void animatePaddle()
+{
+    for (int i = 0; i < PADDLE_WIDTH; i++)
+    {
+        matrix.clearDisplay();
+        for (int j = 0; j <= i; j++)
+        {
+            matrix.drawPixel(paddleX + j, 7, 1);
+        }
+        matrix.display();
+        delay(PADDLE_ANIM_DELAY);
+    }
 }
 
 void displayMessage(const String &message)
